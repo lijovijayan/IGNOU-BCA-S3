@@ -2,6 +2,8 @@
 Write a program in ‘C’ language to multiply two sparse matrices.
 */
 
+// Explanation of sparse matrix: https://youtu.be/V3TAtTtC4Xs
+
 #include <stdio.h>
 
 // Define the maximum size of the matrices
