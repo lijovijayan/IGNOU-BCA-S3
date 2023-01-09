@@ -26,7 +26,9 @@ int main()
 
     // Prompt the user to enter a paragraph of text
     printf("Enter a paragraph of text:\n");
-    char c = getchar();
+    char c;
+
+    c = getchar();
 
     // Read the paragraph of text character by character
     int word_count = 0;
@@ -101,3 +103,21 @@ int main()
 
     return 0;
 }
+
+
+// Output
+
+// Enter a paragraph of text:
+// sentences are a combination of multiple words. words together form a sentence
+// List of words and their frequencies:
+// sentences: 1
+// are: 1
+// a: 2
+// combination: 1
+// of: 1
+// multiple: 1
+// words: 1
+// : 1
+// together: 1
+// form: 1
+// sentence: 2

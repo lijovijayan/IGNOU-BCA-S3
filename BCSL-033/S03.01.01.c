@@ -114,3 +114,8 @@ int main()
 
     return 0;
 }
+
+// Output:
+
+// Linked list: 1 2 3 4 
+// Linked list after deletion: 1 2 4

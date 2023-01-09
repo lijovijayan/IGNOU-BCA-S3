@@ -7,88 +7,98 @@ Write a program in ‘C’ language to implement a stack using two queues.
 
 #define MAX_SIZE 100
 
-// queue data structure
-typedef struct queue
-{
+/* queue structure */
+struct queue {
     int data[MAX_SIZE];
     int front;
     int rear;
-} Queue;
+};
 
-// stack data structure
-typedef struct stack
+/* stack structure */
+struct stack {
+    struct queue q1;
+    struct queue q2;
+};
+
+/* push operation for stack */
+void push(struct stack *s, int x)
 {
-    Queue *q1;
-    Queue *q2;
-} Stack;
-
-// create a new queue
-Queue *create_queue()
-{
-    Queue *q = malloc(sizeof(Queue));
-    q->front = -1;
-    q->rear = -1;
-    return q;
-}
-
-// create a new stack
-Stack *create_stack()
-{
-    Stack *s = malloc(sizeof(Stack));
-    s->q1 = create_queue();
-    s->q2 = create_queue();
-    return s;
-}
-
-// check if the stack is empty
-int is_empty(Stack *s)
-{
-    return (s->q1->front == -1 && s->q1->rear == -1);
-}
-
-// push an element onto the stack
-void push(Stack *s, int data)
-{
-    // first, add the element to q1
-    s->q1->data[++s->q1->rear] = data;
-
-    // now, move all the elements from q1 to q2
-    while (s->q1->front <= s->q1->rear)
-    {
-        s->q2->data[++s->q2->rear] = s->q1->data[s->q1->front++];
+    if (s->q1.rear == MAX_SIZE - 1) {
+        printf("Error: stack overflow\n");
+        return;
     }
 
-    // swap the names of q1 and q2
-    Queue *temp = s->q1;
-    s->q1 = s->q2;
-    s->q2 = temp;
-
-    // reset the front and rear pointers of q2
-    s->q2->front = -1;
-    s->q2->rear = -1;
+    s->q1.data[++s->q1.rear] = x;
 }
 
-// pop an element from the stack
-int pop(Stack *s)
+/* pop operation for stack */
+int pop(struct stack *s)
 {
-    // return the top element from q1
-    return s->q1->data[s->q1->front++];
+    int i, x;
+
+    if (s->q1.front > s->q1.rear) {
+        printf("Error: stack underflow\n");
+        return -1;
+    }
+
+    /* move all elements from q1 to q2 except the last element */
+    while (s->q1.front < s->q1.rear) {
+        x = s->q1.data[s->q1.front++];
+        s->q2.data[++s->q2.rear] = x;
+    }
+
+    /* store the last element of q1 */
+    x = s->q1.data[s->q1.front];
+
+    /* reset q1 */
+    s->q1.front = 0;
+    s->q1.rear = -1;
+
+    /* move all elements back from q2 to q1 */
+    while (s->q2.front <= s->q2.rear) {
+        s->q1.data[++s->q1.rear] = s->q2.data[s->q2.front++];
+    }
+
+    /* reset q2 */
+    s->q2.front = 0;
+    s->q2.rear = -1;
+
+    return x;
 }
 
-// main function
-int main()
+/* main function */
+int main(void)
 {
-    Stack *s = create_stack();
+    struct stack s;
+    int i;
 
-    // push some elements onto the stack
-    push(s, 1);
-    push(s, 2);
-    push(s, 3);
+    s.q1.front = 0;
+    s.q1.rear = -1;
+    s.q2.front = 0;
+    s.q2.rear = -1;
 
-    // pop and print the elements from the stack
-    printf("%d\n", pop(s));
-    printf("%d\n", pop(s));
-    printf("%d\n", pop(s));
+    printf("Pushing element 1\n");
+    push(&s, 1);
+
+    printf("Pushing element 2\n");
+    push(&s, 2);
+    
+    printf("Pushing element 3\n\n");
+    push(&s, 3);
+
+    printf("Popped element: %d\n", pop(&s));
+    printf("Popped element: %d\n", pop(&s));
+    printf("Popped element: %d\n", pop(&s));
 
     return 0;
 }
+
+// Output:
+
+// Pushing element 1
+// Pushing element 2
+// Pushing element 3
+
+// Popped element: 3
+// Popped element: 2
+// Popped element: 1

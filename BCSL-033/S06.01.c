@@ -6,175 +6,140 @@ for insertion and deletion operations.
 #include <stdio.h>
 #include <stdlib.h>
 
-// binary tree node
-typedef struct node
+// Structure for a node in the binary tree
+struct Node
 {
     int data;
-    struct node *left;
-    struct node *right;
-} Node;
+    struct Node *left;
+    struct Node *right;
+};
 
-// create a new node
-Node *create_node(int data)
+// Function to create a new binary tree node
+struct Node *createNode(int data)
 {
-    Node *n = malloc(sizeof(Node));
-    n->data = data;
-    n->left = NULL;
-    n->right = NULL;
-    return n;
+    struct Node *node = (struct Node *)malloc(sizeof(struct Node));
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
 }
 
-// insert a new node into the binary tree
-void insert(Node **root, int data)
+// Function to insert a new node in the binary tree
+void insertNode(struct Node *root, int data)
 {
-    // create a new node
-    Node *n = create_node(data);
-
-    // if the tree is empty, set the new node as the root
-    if (*root == NULL)
+    if (data < root->data)
     {
-        *root = n;
-        return;
-    }
-
-    // find the correct position for the new node
-    Node *current = *root;
-    while (1)
-    {
-        if (data < current->data)
+        if (root->left == NULL)
         {
-            // if the new data is less than the current node's data,
-            // it should be inserted in the left subtree
-            if (current->left == NULL)
-            {
-                current->left = n;
-                return;
-            }
-            else
-            {
-                current = current->left;
-            }
+            root->left = createNode(data);
         }
         else
         {
-            // if the new data is greater than or equal to the current node's data,
-            // it should be inserted in the right subtree
-            if (current->right == NULL)
-            {
-                current->right = n;
-                return;
-            }
-            else
-            {
-                current = current->right;
-            }
+            insertNode(root->left, data);
+        }
+    }
+    else
+    {
+        if (root->right == NULL)
+        {
+            root->right = createNode(data);
+        }
+        else
+        {
+            insertNode(root->right, data);
         }
     }
 }
 
-// delete a node from the binary tree
-void delete(Node **root, int data)
+// Function to find the minimum value node in the binary tree
+struct Node *findMinNode(struct Node *root)
 {
-    // if the tree is empty, there is nothing to do
-    if (*root == NULL)
+    while (root->left != NULL)
     {
-        return;
+        root = root->left;
     }
-
-    // find the node to be deleted
-    Node *current = *root;
-    Node *parent = NULL;
-    while (current != NULL)
-    {
-        if (data < current->data)
-        {
-            // the node to be deleted is in the left subtree
-            parent = current;
-            current = current->left;
-        }
-        else if (data > current->data)
-        {
-            // the node to be deleted is in the right subtree
-            parent = current;
-            current = current->right;
-        }
-        else
-        {
-            // we have found the node to be deleted
-            break;
-        }
-    }
-
-    // if the node was not found, there is nothing to do
-    if (current == NULL)
-    {
-        return;
-    }
-
-    // if the node to be deleted has two children,
-    // we need to find its in-order successor
-    if (current->left != NULL && current->right != NULL)
-    {
-        // find the in-order successor
-        Node *successor = current->right;
-        while (successor->left != NULL)
-        {
-            successor = successor->left;
-        }
-
-        // copy the data from the successor to the current node
-        current->data = successor->data;
-
-        // delete the successor
-        if (parent->left == successor)
-        {
-            parent->left = successor->right;
-        }
-        else
-        {
-            parent->right = successor->right;
-        }
-        free(successor);
-    }
+    return root;
 }
 
-void print_in_order(Node *root)
+// Function to delete a node from the binary tree
+struct Node *deleteNode(struct Node *root, int data)
 {
     if (root == NULL)
     {
-        return;
+        return root;
     }
-
-    // print the left subtree
-    print_in_order(root->left);
-
-    // print the current node
-    printf("%d ", root->data);
-
-    // print the right subtree
-    print_in_order(root->right);
+    else if (data < root->data)
+    {
+        root->left = deleteNode(root->left, data);
+    }
+    else if (data > root->data)
+    {
+        root->right = deleteNode(root->right, data);
+    }
+    else
+    {
+        if (root->left == NULL && root->right == NULL)
+        {
+            free(root);
+            root = NULL;
+        }
+        else if (root->left == NULL)
+        {
+            struct Node *temp = root;
+            root = root->right;
+            free(temp);
+        }
+        else if (root->right == NULL)
+        {
+            struct Node *temp = root;
+            root = root->left;
+            free(temp);
+        }
+        else
+        {
+            struct Node *temp = findMinNode(root->right);
+            root->data = temp->data;
+            root->right = deleteNode(root->right, temp->data);
+        }
+    }
+    return root;
 }
 
-// main function
+void printInOrder(struct Node *root)
+{
+    if (root == NULL)
+        return;
+    printInOrder(root->left);
+    printf("%d ", root->data);
+    printInOrder(root->right);
+}
+
 int main()
 {
-    // create an empty binary tree
-    Node *root = NULL;
+    // Create the root node of the binary tree
+    struct Node *root = createNode(5);
 
-    // insert some nodes into the tree
-    insert(&root, 5);
-    insert(&root, 3);
-    insert(&root, 7);
-    insert(&root, 2);
-    insert(&root, 4);
-    insert(&root, 6);
-    insert(&root, 8);
+    // Insert some nodes in the binary tree
+    insertNode(root, 3);
+    insertNode(root, 2);
+    insertNode(root, 4);
+    insertNode(root, 7);
+    insertNode(root, 6);
+    insertNode(root, 8);
 
-    // delete a node from the tree
-    delete (&root, 7);
+    printf("Tree before deletion: ");
+    printInOrder(root);
 
-    // print the elements of the tree in in-order
-    print_in_order(root);
+    // Delete a node from the binary tree
+    root = deleteNode(root, 7);
+
+    printf("\nTree after deletion: ");
+    printInOrder(root);
 
     return 0;
 }
+
+// Output:
+
+// Tree before deletion: 2 3 4 5 6 7 8 
+// Tree after deletion: 2 3 4 5 6 8

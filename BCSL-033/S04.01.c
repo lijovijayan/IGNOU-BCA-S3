@@ -1,62 +1,69 @@
-/*
-Write a program in ‘C’ language to convert a prefix expression to a
-postfix expression using pointers.
-*/
+#include<stdio.h>
+#include<ctype.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+char stack[100];
+int top = -1;
 
-// Function to convert a prefix expression to a postfix expression
-void prefixToPostfix(char *prefix, char *postfix)
+void push(char x)
 {
-    // stack to store operators
-    char stack[strlen(prefix)];
-
-    // initialize top of stack
-    int top = -1;
-
-    // evaluate the expression
-    for (int i = strlen(prefix) - 1; i >= 0; i--)
-    {
-        // push operands to the stack
-        if (isalnum(prefix[i]))
-            stack[++top] = prefix[i];
-
-        // if the current character is an operator
-        else
-        {
-            // pop two operands from the stack
-            char op1 = stack[top--];
-            char op2 = stack[top--];
-
-            // create a string with the two operands and the operator
-            // in the correct order (op1 op2 operator)
-            char temp[3] = {op1, op2, prefix[i]};
-
-            // push the result to the stack
-            stack[++top] = strdup(temp);
-        }
-    }
-
-    // copy the result from the stack to the postfix string
-    strcpy(postfix, stack[top--]);
+    stack[++top] = x;
 }
 
-// main function
-int main()
+char pop()
 {
-    // input prefix expression
-    char prefix[] = "*-A/BC-/AKL";
+    if(top == -1)
+        return -1;
+    else
+        return stack[top--];
+}
 
-    // output postfix expression
-    char postfix[strlen(prefix)];
-
-    // convert prefix to postfix expression
-    prefixToPostfix(prefix, postfix);
-
-    // print the postfix expression
-    printf("%s", postfix);
-
+int priority(char x)
+{
+    if(x == '(')
+        return 0;
+    if(x == '+' || x == '-')
+        return 1;
+    if(x == '*' || x == '/')
+        return 2;
     return 0;
 }
+
+int main()
+{
+    char exp[100];
+    char *e, x;
+    printf("Enter the expression : ");
+    scanf("%s",exp);
+    printf("\n");
+    e = exp;
+    
+    while(*e != '\0')
+    {
+        if(isalnum(*e))
+            printf("%c ",*e);
+        else if(*e == '(')
+            push(*e);
+        else if(*e == ')')
+        {
+            while((x = pop()) != '(')
+                printf("%c ", x);
+        }
+        else
+        {
+            while(priority(stack[top]) >= priority(*e))
+                printf("%c ",pop());
+            push(*e);
+        }
+        e++;
+    }
+    
+    while(top != -1)
+    {
+        printf("%c ",pop());
+    }return 0;
+}
+
+// Output
+
+// Enter the expression : (a+b)*c+(d-a)
+// a b + c * d a - +

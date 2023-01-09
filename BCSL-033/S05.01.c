@@ -169,3 +169,6 @@ int main()
 
     return 0;
 }
+
+// Output: 
+// Dequeue: 3 2 1 4 5 6

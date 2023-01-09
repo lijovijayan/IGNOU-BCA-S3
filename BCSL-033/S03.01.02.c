@@ -101,3 +101,9 @@ int main()
 
     return 0;
 }
+
+
+// Output:
+
+// Doubly linked list: 1 2 3 4 
+// Doubly linked list: 1 3 4

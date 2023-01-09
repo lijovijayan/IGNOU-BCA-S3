@@ -80,3 +80,97 @@ int main()
 
     return 0;
 }
+
+// Output:
+
+// Enter the details of the students:
+// Student 1
+// Enrolment number: 1001
+// Name: Student_1
+// Marks: 97
+
+// Student 2
+// Enrolment number: 1002
+// Name: Student_2
+// Marks: 84
+
+// Student 3
+// Enrolment number: 1003
+// Name: Student_3
+// Marks: 34
+
+// Student 4
+// Enrolment number: 1004
+// Name: Student_4
+// Marks: 75
+
+// Student 5
+// Enrolment number: 1005
+// Name: Student_5
+// Marks: 45
+
+// Student 6
+// Enrolment number: 1006
+// Name: Student_6
+// Marks: 34
+
+// Student 7
+// Enrolment number: 1007
+// Name: Student_7
+// Marks: 99
+
+// Student 8
+// Enrolment number: 1008
+// Name: Student_8
+// Marks: 34
+
+// Student 9
+// Enrolment number: 1009
+// Name: Student_9
+// Marks: 78
+
+// Student 10
+// Enrolment number: 1010
+// Name: Student_10
+// Marks: 92
+
+// Student details:
+// Enrolment number: 1007
+// Name: Student_7
+// Rank: 1
+
+// Enrolment number: 1001
+// Name: Student_1
+// Rank: 2
+
+// Enrolment number: 1010
+// Name: Student_10
+// Rank: 3
+
+// Enrolment number: 1002
+// Name: Student_2
+// Rank: 4
+
+// Enrolment number: 1009
+// Name: Student_9
+// Rank: 5
+
+// Enrolment number: 1004
+// Name: Student_4
+// Rank: 6
+
+// Enrolment number: 1005
+// Name: Student_5
+// Rank: 7
+
+// Enrolment number: 1003
+// Name: Student_3
+// Rank: 8
+
+// Enrolment number: 1006
+// Name: Student_6
+// Rank: 9
+
+// Enrolment number: 1008
+// Name: Student_8
+// Rank: 10

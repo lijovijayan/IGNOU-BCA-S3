@@ -121,3 +121,9 @@ int main()
 
     return 0;
 }
+
+// Output:
+
+// List A: The list contains: 1 2 3 4 
+// List B: The list contains: 3 4 5 6 
+// The common elements are: The list contains: 3 4

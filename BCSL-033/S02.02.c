@@ -97,3 +97,45 @@ int main()
 
     return 0;
 }
+
+
+// Output:
+
+// Enter the dimensions of matrix A (m x n): 2 3
+// Enter the dimensions of matrix B (p x q): 3 3
+// Enter the number of non-zero elements in matrix A: 3
+// Enter the number of non-zero elements in matrix B: 2
+// Enter the non-zero elements of matrix A:
+// Row: 0
+// Column: Value: 0 
+// 1
+
+// Row: 1
+// Column: 0
+// Value: -1
+
+// Row: 1
+// Column: 2
+// Value: 3
+
+// Enter the non-zero elements of matrix B:
+// Row: 0
+// Column: 0
+// Value: 7
+
+// Row: 2
+// Column: 2
+// Value: 1
+
+// The product of the matrices is:
+// Row: 0
+// Column: 0
+// Value: 7
+
+// Row: 1
+// Column: 0
+// Value: -7
+
+// Row: 1
+// Column: 2
+// Value: 3

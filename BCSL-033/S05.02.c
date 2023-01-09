@@ -196,3 +196,7 @@ int main()
 
     return 0;
 }
+
+
+// Output:
+// Dequeue: 0 0 0 0 0 6

@@ -74,19 +74,21 @@ int main()
     // array of stacks
     struct Stack *stacks[MAX_STACKS];
 
+    int i;
+
     // create 10 stacks
-    for (int i = 0; i < MAX_STACKS; i++)
+    for (i = 0; i < MAX_STACKS; i++)
         stacks[i] = createStack();
 
     // push some elements to the stacks
-    for (int i = 0; i < MAX_STACKS; i++)
+    for (i = 0; i < MAX_STACKS; i++)
     {
         for (int j = 0; j < 5; j++)
             push(stacks[i], (i + 1) * (j + 1));
     }
 
     // pop some elements from the stacks
-    for (int i = 0; i < MAX_STACKS; i++)
+    for (i = 0; i < MAX_STACKS; i++)
     {
         for (int j = 0; j < 5; j++)
             printf("%d ", pop(stacks[i]));
@@ -96,3 +98,16 @@ int main()
 
     return 0;
 }
+
+// Output:
+
+// 5 4 3 2 1 
+// 10 8 6 4 2 
+// 15 12 9 6 3 
+// 20 16 12 8 4 
+// 25 20 15 10 5 
+// 30 24 18 12 6 
+// 35 28 21 14 7 
+// 40 32 24 16 8 
+// 45 36 27 18 9 
+// 50 40 30 20 10

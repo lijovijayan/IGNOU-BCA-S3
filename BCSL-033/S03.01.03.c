@@ -140,3 +140,8 @@ int main()
 
     return 0;
 }
+
+// Output:
+
+// The list contains: 1 2 3 4 
+// The list contains: 1 2 4

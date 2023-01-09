@@ -24,14 +24,25 @@ void reverse(char *str)
 // main function
 int main()
 {
+    char str[100];
+
+    printf("Enter a string: ");
+
     // input string
-    char str[] = "Hello, World!";
+    fgets(str, sizeof(str), stdin);
 
     // reverse the string
+
     reverse(str);
 
     // print the reversed string
-    printf("%s", str);
+    printf("Reverse of the string: %s", str);
 
     return 0;
 }
+
+// Output:
+
+// Enter a string: Hello world!
+// Reverse of the string: 
+// !dlrow olleH

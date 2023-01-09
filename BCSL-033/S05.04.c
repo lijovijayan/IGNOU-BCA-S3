@@ -4,117 +4,155 @@ Write a program in ‘C’ language to implement a queue using two stacks.
 
 #include <stdio.h>
 #include <stdlib.h>
-
-// Stack data structure
-struct Stack
+struct node
 {
-    int top;
-    unsigned capacity;
-    int *array;
+    int data;
+    struct node *next;
 };
-
-// Function to create a stack of given capacity
-struct Stack *createStack(unsigned capacity)
+void push(struct node **top, int data);
+int pop(struct node **top);
+struct queue
 {
-    struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
-    stack->top = -1;
-    stack->capacity = capacity;
-    stack->array = (int *)malloc(stack->capacity * sizeof(int));
-    return stack;
+    struct node *stack1;
+    struct node *stack2;
+};
+void enqueue(struct queue *q, int x)
+{
+    push(&q->stack1, x);
 }
-
-// Stack is full when top is equal to the last index
-int isFull(struct Stack *stack)
+void dequeue(struct queue *q)
 {
-    return stack->top == stack->capacity - 1;
-}
-
-// Stack is empty when top is equal to -1
-int isEmpty(struct Stack *stack)
-{
-    return stack->top == -1;
-}
-
-// Function to add an item to stack
-void push(struct Stack *stack, int item)
-{
-    if (isFull(stack))
+    int x;
+    if (q->stack1 == NULL && q->stack2 == NULL)
     {
+        printf("\nQueue is empty!\n\n");
         return;
     }
-    stack->array[++stack->top] = item;
-    printf("%d pushed to stack\n", item);
-}
-
-// Function to remove an item from stack
-int pop(struct Stack *stack)
-{
-    if (isEmpty(stack))
+    if (q->stack2 == NULL)
     {
-        return -1;
-    }
-    return stack->array[stack->top--];
-}
-
-// Queue data structure
-struct Queue
-{
-    struct Stack *stack1;
-    struct Stack *stack2;
-};
-
-// Function to create a queue
-struct Queue *createQueue(unsigned capacity)
-{
-    struct Queue *queue = (struct Queue *)malloc(sizeof(struct Queue));
-    queue->stack1 = createStack(capacity);
-    queue->stack2 = createStack(capacity);
-    return queue;
-}
-
-// Function to enqueue an item
-void enqueue(struct Queue *queue, int item)
-{
-    push(queue->stack1, item);
-}
-
-// Function to dequeue an item
-int dequeue(struct Queue *queue)
-{
-    if (isEmpty(queue->stack1) && isEmpty(queue->stack2))
-    {
-        return -1;
-    }
-
-    // If stack2 is empty, move items from stack1 to stack2
-    if (isEmpty(queue->stack2))
-    {
-        while (!isEmpty(queue->stack1))
+        while (q->stack1 != NULL)
         {
-            push(queue->stack2, pop(queue->stack1));
+            x = pop(&q->stack1);
+            push(&q->stack2, x);
         }
     }
-
-    // Return the top item from stack2
-    return pop(queue->stack2);
+    x = pop(&q->stack2);
+    printf("%d\n", x);
 }
-
+void push(struct node **top, int data)
+{
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    if (newnode == NULL)
+    {
+        printf("Stack overflow! \n");
+        return;
+    }
+    newnode->data = data;
+    newnode->next = (*top);
+    (*top) = newnode;
+}
+int pop(struct node **top)
+{
+    int buff;
+    struct node *t;
+    if (*top == NULL)
+    {
+        printf("Stack underflow! \n");
+        return 0;
+    }
+    else
+    {
+        t = *top;
+        buff = t->data;
+        *top = t->next;
+        free(t);
+        return buff;
+    }
+}
+void display(struct node *top1, struct node *top2)
+{
+    printf("\nElements in the Queue: ");
+    while (top1 != NULL)
+    {
+        printf("%d\t", top1->data);
+        top1 = top1->next;
+    }
+    while (top2 != NULL)
+    {
+        printf("%d\t", top2->data);
+        top2 = top2->next;
+    }
+    printf("\n\n");
+}
 int main()
 {
-    // Create a queue of capacity 4
-    struct Queue *queue = createQueue(4);
-
-    // Enqueue items
-    enqueue(queue, 1);
-    enqueue(queue, 2);
-    enqueue(queue, 3);
-    enqueue(queue, 4);
-
-    // Dequeue items
-    printf("%d dequeued from queue\n", dequeue(queue));
-    printf("%d dequeued from queue\n", dequeue(queue));
-    printf("%d dequeued from queue\n", dequeue(queue));
-    printf("%d dequeued from queue\n", dequeue(queue));
-
-    return 0;
+    struct queue *q = (struct queue *)malloc(sizeof(struct queue));
+    int f = 0, a;
+    char ch = 'y';
+    q->stack1 = NULL;
+    q->stack2 = NULL;
+    while (ch == 'y' || ch == 'Y')
+    {
+        printf("\n1.add to queue\n2.remove from queue\n3.display\n4.exit\nEnter ur choice: ");
+        scanf("%d", &f);
+        switch (f)
+        {
+        case 1:
+            printf("enter the element to be added to queue: ");
+            scanf("%d", &a);
+            enqueue(q, a);
+            break;
+        case 2:
+            dequeue(q);
+            break;
+        case 3:
+            display(q->stack1, q->stack2);
+            break;
+        case 4:
+            exit(1);
+            break;
+        default:
+            printf("invalid option, please try again!\n");
+            break;
+        }
+    }
 }
+
+
+// Output:
+
+// 1.add to queue
+// 2.remove from queue
+// 3.display
+// 4.exit
+// Enter ur choice: 1
+// enter the element to be added to queue: 3
+
+// 1.add to queue
+// 2.remove from queue
+// 3.display
+// 4.exit
+// Enter ur choice: 1
+// enter the element to be added to queue: 8
+
+// 1.add to queue
+// 2.remove from queue
+// 3.display
+// 4.exit
+// Enter ur choice: 2
+// 3
+
+// 1.add to queue
+// 2.remove from queue
+// 3.display
+// 4.exit
+// Enter ur choice: 3
+
+// Elements in the Queue: 8
+
+
+// 1.add to queue
+// 2.remove from queue
+// 3.display
+// 4.exit
+// Enter ur choice: 4

@@ -131,3 +131,8 @@ void printList(struct Node *head)
     }
     printf("\n");
 }
+
+// Output
+
+// Unsorted list: 5 10 3 2 8 
+// Sorted list: 2 3 5 8 10
