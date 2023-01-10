@@ -22,6 +22,7 @@ struct SparseMatrix
 
 int main()
 {
+    int i, j;
     // Prompt the user to enter the dimensions of the matrices
     printf("Enter the dimensions of matrix A (m x n): ");
     scanf("%d %d", &A.m, &A.n);
@@ -43,7 +44,7 @@ int main()
 
     // Prompt the user to enter the non-zero elements of matrix A
     printf("Enter the non-zero elements of matrix A:\n");
-    for (int i = 0; i < A.num_nonzero_elements; i++)
+    for (i = 0; i < A.num_nonzero_elements; i++)
     {
         printf("Row: ");
         scanf("%d", &A.row[i]);
@@ -56,7 +57,7 @@ int main()
 
     // Prompt the user to enter the non-zero elements of matrix B
     printf("Enter the non-zero elements of matrix B:\n");
-    for (int i = 0; i < B.num_nonzero_elements; i++)
+    for (i = 0; i < B.num_nonzero_elements; i++)
     {
         printf("Row: ");
         scanf("%d", &B.row[i]);
@@ -71,9 +72,9 @@ int main()
     C.num_nonzero_elements = 0;
 
     // Multiply the matrices
-    for (int i = 0; i < A.num_nonzero_elements; i++)
+    for (i = 0; i < A.num_nonzero_elements; i++)
     {
-        for (int j = 0; j < B.num_nonzero_elements; j++)
+        for (j = 0; j < B.num_nonzero_elements; j++)
         {
             // Check if the current elements of the matrices can be multiplied
             if (A.col[i] == B.row[j])
@@ -89,7 +90,7 @@ int main()
 
     // Print the result
     printf("The product of the matrices is:\n");
-    for (int i = 0; i < C.num_nonzero_elements; i++)
+    for (i = 0; i < C.num_nonzero_elements; i++)
     {
         printf("Row: %d\n", C.row[i]);
         printf("Column: %d\n", C.col[i]);
