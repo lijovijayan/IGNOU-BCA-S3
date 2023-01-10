@@ -9,10 +9,10 @@ Write a program in ‘C’ language to reverse an input string.
 void reverse(char *str)
 {
     // find the length of the string
-    int length = strlen(str);
+    int length = strlen(str), i = 0;
 
     // loop through the string
-    for (int i = 0; i < length / 2; i++)
+    for (i = 0; i < length / 2; i++)
     {
         // swap the characters at the beginning and end of the string
         char temp = str[i];

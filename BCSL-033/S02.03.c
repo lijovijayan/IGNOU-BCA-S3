@@ -19,7 +19,7 @@ int main()
     int frequencies[MAX_WORDS];
 
     // Initialize the frequency array to 0
-    for (int i = 0; i < MAX_WORDS; i++)
+    for (i = 0; i < MAX_WORDS; i++)
     {
         frequencies[i] = 0;
     }
@@ -59,12 +59,12 @@ int main()
     word_count++;
 
     // Make a list of words and their frequencies
-    int num_unique_words = 0;
-    for (int i = 0; i < word_count; i++)
+    int num_unique_words = 0, int i = 0, j = 0;
+    for (i = 0; i < word_count; i++)
     {
         // Check if the current word is already in the list
         int found = 0;
-        for (int j = 0; j < num_unique_words; j++)
+        for (j = 0; j < num_unique_words; j++)
         {
             if (strcmp(words[i], words[j]) == 0)
             {
@@ -83,9 +83,9 @@ int main()
 
     // Count the frequencies of the words in
     // the paragraph
-    for (int i = 0; i < num_unique_words; i++)
+    for (i = 0; i < num_unique_words; i++)
     {
-        for (int j = 0; j < word_count; j++)
+        for (j = 0; j < word_count; j++)
         {
             if (strcmp(words[i], words[j]) == 0)
             {
@@ -96,7 +96,7 @@ int main()
 
     // Print the list of words and their frequencies
     printf("List of words and their frequencies:\n");
-    for (int i = 0; i < num_unique_words; i++)
+    for (i = 0; i < num_unique_words; i++)
     {
         printf("%s: %d\n", words[i], frequencies[i]);
     }
